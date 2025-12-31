@@ -108,7 +108,7 @@ const store = {
   state: {
     // will be unpaused in init()
     paused: true,
-    soundEnabled: true,
+    soundEnabled: false,
     menuOpen: false,
     openHelpTopic: null,
     fullscreen: isFullscreen(),
@@ -863,11 +863,6 @@ function init() {
 
   // Apply initial config
   configDidUpdate();
-  
-  // Bật âm thanh theo cấu hình
-  if (appConfig.soundEnabled) {
-    toggleSound(true);
-  }
 }
 
 function fitShellPositionInBoundsH(position) {
