@@ -143,28 +143,24 @@
   <script src='./js/countdown.js'></script>
   <script src='./js/script.js'></script>
   <script>
-    // ====== BRIDGE: Chờ cổng mở → chạy pháo hoa + bật âm thanh ======
+    // ====== BRIDGE: Chặn init pháo hoa cho đến khi cổng mở ======
+    // Tại thời điểm này script.js đã chạy xong synchronous code,
+    // nhưng setTimeout(0) chứa soundManager.preload().then(init) CHƯA fire.
+    // Ta thay thế hàm init bằng hàm rỗng, giữ lại bản gốc để gọi sau.
     (function() {
-      // script.js đã chạy xong nhưng nếu cổng chưa mở, ta cần:
-      // 1. Pause pháo hoa ngay lập tức
-      // 2. Khi cổng mở → unpause + bật sound
       if (window.CountdownGate && !window.CountdownGate.isOpen()) {
-        // Pause ngay lập tức
-        if (typeof togglePause === 'function') {
-          togglePause(true);
-        }
-        // Ẩn stage container trở lại
-        var stageEl = document.querySelector('.stage-container');
-        if (stageEl) stageEl.classList.add('remove');
+        // Lưu init gốc
+        var _realInit = init;
+        // Thay init bằng hàm rỗng → khi preload xong gọi init() sẽ không làm gì
+        init = function() {
+          console.log('[Bridge] init() bị chặn, chờ cổng mở...');
+        };
 
         window.CountdownGate.onGateOpen(function() {
-          // Hiện stage container
-          var stage = document.querySelector('.stage-container');
-          if (stage) stage.classList.remove('remove');
-          // Unpause fireworks
-          if (typeof togglePause === 'function') {
-            togglePause(false);
-          }
+          console.log('[Bridge] Cổng mở → khởi động pháo hoa!');
+          // Khôi phục và gọi init gốc
+          init = _realInit;
+          init();
           // Bật âm thanh
           setTimeout(function() {
             if (typeof toggleSound === 'function') {
@@ -173,12 +169,16 @@
           }, 300);
         });
       } else {
-        // Cổng đã mở (đã qua giao thừa) → bật sound luôn
-        setTimeout(function() {
-          if (typeof toggleSound === 'function') {
-            toggleSound(true);
-          }
-        }, 1000);
+        // Đã qua giao thừa → bật sound sau khi init chạy xong
+        var _origInit2 = init;
+        init = function() {
+          _origInit2();
+          setTimeout(function() {
+            if (typeof toggleSound === 'function') {
+              toggleSound(true);
+            }
+          }, 500);
+        };
       }
     })();
   </script>
