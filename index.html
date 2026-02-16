@@ -158,26 +158,35 @@
 
         window.CountdownGate.onGateOpen(function() {
           console.log('[Bridge] Cổng mở → khởi động pháo hoa!');
-          // Khôi phục và gọi init gốc
           init = _realInit;
           init();
-          // Bật âm thanh
-          setTimeout(function() {
+          var retries = 0;
+          var trySound = function() {
             if (typeof toggleSound === 'function') {
               toggleSound(true);
+              console.log('[Sound] Auto-enabled');
+            } else if (retries < 10) {
+              retries++;
+              setTimeout(trySound, 200);
             }
-          }, 300);
+          };
+          trySound();
         });
       } else {
-        // Đã qua giao thừa → bật sound sau khi init chạy xong
         var _origInit2 = init;
         init = function() {
           _origInit2();
-          setTimeout(function() {
+          var retries = 0;
+          var trySound = function() {
             if (typeof toggleSound === 'function') {
               toggleSound(true);
+              console.log('[Sound] Auto-enabled');
+            } else if (retries < 10) {
+              retries++;
+              setTimeout(trySound, 200);
             }
-          }, 500);
+          };
+          trySound();
         };
       }
     })();
