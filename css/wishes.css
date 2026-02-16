@@ -1,0 +1,48 @@
+.wishes-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+  overflow: hidden;
+}
+
+.wish-text {
+  position: absolute;
+  white-space: nowrap;
+  font-family: 'Pacifico', 'Russo One', arial, sans-serif;
+  color: #fff;
+  text-shadow:
+    0 0 10px rgba(255, 255, 255, 0.8),
+    0 0 20px rgba(255, 200, 255, 0.6),
+    0 0 40px rgba(200, 150, 255, 0.4),
+    0 0 60px rgba(180, 100, 255, 0.2);
+  pointer-events: none;
+  will-change: transform, opacity;
+  animation: wishFloat var(--wish-duration) linear forwards;
+  letter-spacing: 0.05em;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+@keyframes wishFloat {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0;
+  }
+  5% {
+    opacity: var(--wish-max-opacity, 1);
+  }
+  50% {
+    opacity: var(--wish-max-opacity, 1);
+  }
+  85% {
+    opacity: 0.15;
+  }
+  100% {
+    transform: translateY(var(--wish-travel)) scale(var(--wish-end-scale, 0.7));
+    opacity: 0;
+  }
+}

@@ -1,0 +1,263 @@
+
+/* Overlay chặn toàn bộ nội dung */
+.countdown-gate {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  background: radial-gradient(ellipse at center bottom, #1a0a2e 0%, #0d0015 40%, #000 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 1.5s ease, visibility 1.5s ease;
+  overflow: hidden;
+}
+
+.countdown-gate.gate-open {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Tiêu đề */
+.countdown-gate__title {
+  font-family: 'Pacifico', 'Russo One', cursive;
+  font-size: clamp(1.6rem, 5vw, 3.5rem);
+  color: #fff;
+  text-align: center;
+  margin-bottom: 0.3em;
+  text-shadow:
+    0 0 20px rgba(255, 200, 100, 0.6),
+    0 0 40px rgba(255, 150, 50, 0.3);
+  animation: gatePulse 3s ease-in-out infinite;
+  letter-spacing: 0.03em;
+}
+
+.countdown-gate__subtitle {
+  font-family: 'Pacifico', cursive;
+  font-size: clamp(0.9rem, 2.5vw, 1.4rem);
+  color: rgba(255, 200, 150, 0.7);
+  text-align: center;
+  margin-bottom: 2em;
+  letter-spacing: 0.04em;
+}
+
+/* Các ô đếm ngược */
+.countdown-gate__timer {
+  display: flex;
+  gap: clamp(10px, 3vw, 30px);
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 2em;
+}
+
+.countdown-gate__unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 70px;
+}
+
+.countdown-gate__number {
+  font-family: 'Russo One', monospace;
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  color: #fff;
+  text-shadow:
+    0 0 15px rgba(255, 200, 100, 0.8),
+    0 0 30px rgba(255, 150, 50, 0.5),
+    0 0 60px rgba(255, 100, 0, 0.3);
+  line-height: 1;
+  min-width: 1.6em;
+  text-align: center;
+}
+
+.countdown-gate__label {
+  font-family: 'Russo One', sans-serif;
+  font-size: clamp(0.6rem, 1.5vw, 0.85rem);
+  color: rgba(255, 200, 150, 0.6);
+  text-transform: uppercase;
+  margin-top: 0.5em;
+  letter-spacing: 0.1em;
+}
+
+/* Separator */
+.countdown-gate__sep {
+  font-family: 'Russo One', monospace;
+  font-size: clamp(2rem, 6vw, 4rem);
+  color: rgba(255, 200, 100, 0.5);
+  align-self: flex-start;
+  margin-top: 0.15em;
+  animation: colonBlink 1s step-end infinite;
+}
+
+@keyframes colonBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}
+
+@keyframes gatePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+/* Particle nhỏ nền */
+.countdown-gate__particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.countdown-gate__particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: rgba(255, 200, 100, 0.6);
+  animation: particleFloat var(--p-dur, 8s) linear infinite;
+  opacity: 0;
+}
+
+@keyframes particleFloat {
+  0% {
+    transform: translateY(0) scale(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: var(--p-opacity, 0.5);
+    transform: translateY(0) scale(1);
+  }
+  90% {
+    opacity: var(--p-opacity, 0.5);
+  }
+  100% {
+    transform: translateY(-100vh) scale(0.3);
+    opacity: 0;
+  }
+}
+
+/* ====== PANEL ĐIỀU KHIỂN TEST ====== */
+.gate-debug-panel {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  z-index: 10001;
+  background: rgba(0, 0, 0, 0.85);
+  border: 1px solid rgba(255, 200, 100, 0.3);
+  border-radius: 10px;
+  padding: 14px 18px;
+  font-family: 'Russo One', monospace, sans-serif;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  min-width: 240px;
+  transition: opacity 0.3s;
+  user-select: none;
+}
+
+.gate-debug-panel.hidden {
+  display: none;
+}
+
+.gate-debug-panel__title {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(255, 200, 100, 0.8);
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.gate-debug-panel__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.gate-debug-panel__row:last-child {
+  margin-bottom: 0;
+}
+
+.gate-debug-panel__label {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.gate-debug-panel input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: #ffbf36;
+}
+
+.gate-debug-panel input[type="datetime-local"] {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 200, 100, 0.3);
+  border-radius: 4px;
+  color: #fff;
+  font-family: monospace;
+  font-size: 11px;
+  padding: 3px 6px;
+  outline: none;
+  cursor: pointer;
+}
+
+.gate-debug-panel input[type="datetime-local"]:focus {
+  border-color: rgba(255, 200, 100, 0.7);
+}
+
+.gate-debug-panel__btn {
+  display: block;
+  width: 100%;
+  margin-top: 6px;
+  padding: 5px 0;
+  background: rgba(255, 200, 100, 0.15);
+  border: 1px solid rgba(255, 200, 100, 0.3);
+  border-radius: 4px;
+  color: rgba(255, 200, 100, 0.9);
+  font-family: 'Russo One', sans-serif;
+  font-size: 11px;
+  cursor: pointer;
+  text-align: center;
+  letter-spacing: 0.05em;
+  transition: background 0.2s;
+}
+
+.gate-debug-panel__btn:hover {
+  background: rgba(255, 200, 100, 0.3);
+}
+
+/* Nút toggle debug panel (luôn hiện) */
+.gate-debug-toggle {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  z-index: 10002;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 200, 100, 0.3);
+  color: rgba(255, 200, 100, 0.8);
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  transition: background 0.2s;
+  user-select: none;
+}
+
+.gate-debug-toggle:hover {
+  background: rgba(0, 0, 0, 0.9);
+}

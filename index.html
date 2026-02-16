@@ -6,8 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
   <meta name="mobile-web-app-capable" content="yes">
   <link href="https://fonts.googleapis.com/css?family=Russo+One" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./css/reset.min.css">
   <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/wishes.css">
+  <link rel="stylesheet" href="./css/countdown.css">
 
 </head>
 
@@ -137,7 +140,49 @@
   <script src='./js/fscreen.js'></script>
   <script src="./js/Stage.js"></script>
   <script src='./js/MyMath.js'></script>
+  <script src='./js/countdown.js'></script>
   <script src='./js/script.js'></script>
+  <script>
+    // ====== BRIDGE: Chờ cổng mở → chạy pháo hoa + bật âm thanh ======
+    (function() {
+      // script.js đã chạy xong nhưng nếu cổng chưa mở, ta cần:
+      // 1. Pause pháo hoa ngay lập tức
+      // 2. Khi cổng mở → unpause + bật sound
+      if (window.CountdownGate && !window.CountdownGate.isOpen()) {
+        // Pause ngay lập tức
+        if (typeof togglePause === 'function') {
+          togglePause(true);
+        }
+        // Ẩn stage container trở lại
+        var stageEl = document.querySelector('.stage-container');
+        if (stageEl) stageEl.classList.add('remove');
+
+        window.CountdownGate.onGateOpen(function() {
+          // Hiện stage container
+          var stage = document.querySelector('.stage-container');
+          if (stage) stage.classList.remove('remove');
+          // Unpause fireworks
+          if (typeof togglePause === 'function') {
+            togglePause(false);
+          }
+          // Bật âm thanh
+          setTimeout(function() {
+            if (typeof toggleSound === 'function') {
+              toggleSound(true);
+            }
+          }, 300);
+        });
+      } else {
+        // Cổng đã mở (đã qua giao thừa) → bật sound luôn
+        setTimeout(function() {
+          if (typeof toggleSound === 'function') {
+            toggleSound(true);
+          }
+        }, 1000);
+      }
+    })();
+  </script>
+  <script src='./js/wishes.js'></script>
   
 </body>
 
