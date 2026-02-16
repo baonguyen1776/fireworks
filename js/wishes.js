@@ -12,20 +12,17 @@
   'use strict';
 
   const WISHES_TEXT = `
-Happy New Year 2026 🎆
-Chúc Mừng Năm Mới 🎉
-An Khang Thịnh Vượng 🏮
-Vạn Sự Như Ý ✨
-Phát Tài Phát Lộc 💰
-Sức Khỏe Dồi Dào ❤️
-Hạnh Phúc Tràn Đầy 🌸
-Năm Mới Bình An 🕊️
+Happy New Year 2026
+Chúc cậu một năm thật rạng rỡ
+Luôn xinh đẹp, hồn nhiên
+Nhiều hạnh phúc, không lo nghĩ
+Luôn cười thật tươi nha 
 `;
 
   const CONFIG = {
     // Thời gian giữa mỗi lần xuất hiện câu chúc (ms)
-    spawnIntervalMin: 1200,
-    spawnIntervalMax: 3000,
+    spawnIntervalMin: 1000,
+    spawnIntervalMax: 2800,
     // Thời gian bay từ dưới lên (ms)
     durationMin: 8000,
     durationMax: 14000,
