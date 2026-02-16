@@ -1,13 +1,11 @@
 /**
- * ============================================
  * FLOATING WISHES SYSTEM
- * ============================================
+ * 
  * Hiển thị các câu chúc bay từ dưới lên trên
  * với hiệu ứng đậm dần rồi mờ dần khi lên cao.
  * 
  * Cách dùng: Sửa biến WISHES bên dưới,
  * mỗi câu chúc nằm trên một dòng.
- * ============================================
  */
 
 (function () {
@@ -47,7 +45,7 @@ Năm Mới Bình An 🕊️
     endScaleMin: 0.5,
     endScaleMax: 0.8,
     // Số câu chúc tối đa hiển thị cùng lúc
-    maxVisible: 8,
+    maxVisible: 3,
   };
 
   const wishes = WISHES_TEXT

@@ -1,14 +1,12 @@
 /**
- * ============================================
  * COUNTDOWN GATE SYSTEM
- * ============================================
+ * 
  * Chặn truy cập pháo hoa cho đến đúng giao thừa
  * Tết Âm lịch: 00:00 ngày 17/02/2026 (giờ VN, UTC+7)
  *
  * DEBUG MODE:
  *   - Bật/tắt cổng chặn
  *   - Chỉnh giờ giả lập để test
- * ============================================
  */
 
 (function () {
@@ -17,14 +15,12 @@
   // 00:00 ngày 17/02/2026 VN = 17:00 ngày 16/02/2026 UTC
   const TARGET_UTC = new Date(Date.UTC(2026, 1, 16, 17, 0, 0)); // month 0-indexed
 
-  // ====== STATE ======
   let gateDisabled = false;   // true = bỏ qua cổng (debug)
   let fakeNow = null;         // null = dùng giờ thực, Date = giờ giả lập
   let tickInterval = null;
   let gateIsOpen = false;     // đã mở cổng chưa
   let gateCallbacks = [];     // callbacks chờ cổng mở
 
-  // ====== GLOBAL API ======
   // Cho phép các script khác đăng ký callback khi cổng mở
   window.CountdownGate = {
     // Đăng ký callback — nếu cổng đã mở thì gọi ngay
@@ -86,12 +82,12 @@
     // Title
     const title = document.createElement('div');
     title.className = 'countdown-gate__title';
-    title.textContent = '🧧 Chào Đón Giao Thừa 🧧';
+    title.textContent = '🧧 Cùng Đón Giao Thừa nhaa 🧧';
     gate.appendChild(title);
 
     const subtitle = document.createElement('div');
     subtitle.className = 'countdown-gate__subtitle';
-    subtitle.textContent = 'Tết Nguyên Đán Bính Ngọ — 17/02/2026';
+    subtitle.textContent = 'Đợi tí xíu nữa thôi nè...';
     gate.appendChild(subtitle);
 
     // Timer
@@ -130,11 +126,9 @@
     gate.appendChild(timer);
     document.body.appendChild(gate);
 
-    // ====== DEBUG PANEL ======
     buildDebugPanel();
   }
 
-  // ====== DEBUG PANEL ======
   function buildDebugPanel() {
     // Toggle button
     const toggleBtn = document.createElement('button');
@@ -237,10 +231,9 @@
   }
 
   function fireGateOpen() {
-    if (gateIsOpen) return; // chỉ fire 1 lần
+    if (gateIsOpen) return;
     gateIsOpen = true;
     console.log('[Gate] Cổng đã mở! Bắt đầu bắn pháo hoa.');
-    // Gọi tất cả callbacks đã đăng ký
     gateCallbacks.forEach(function (cb) {
       try { cb(); } catch (e) { console.error('[Gate] Callback error:', e); }
     });
@@ -300,8 +293,6 @@
     tick();
     tickInterval = setInterval(tick, 1000);
   }
-
-  // Chạy ngay lập tức — document.body đã tồn tại vì script nằm cuối <body>
   init();
 
 })();
