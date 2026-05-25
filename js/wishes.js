@@ -12,11 +12,10 @@
   'use strict';
 
   const WISHES_TEXT = `
-Happy New Year 2026
-Chúc cậu một năm thật rạng rỡ
-Luôn xinh đẹp, hồn nhiên
-Nhiều hạnh phúc, không lo nghĩ
-Luôn cười thật tươi nha 
+Happy Birthday to you!
+Happy Birthday to you!
+Happy Birthday Happy Birthday!
+Happy Birthday to you!
 `;
 
   const CONFIG = {
